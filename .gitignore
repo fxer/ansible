@@ -1,0 +1,36 @@
+# Ansible specific excludes
+hosts
+*.pub
+
+.settings
+gs
+logs
+.classpath
+.project
+.target
+
+# Added by Intellij plugin
+project/project
+project/target
+target
+tmp
+.history
+dist
+/.idea
+/*.iml
+/out
+/.idea_modules
+/.classpath
+/.project
+/RUNNING_PID
+
+# config files
+*application.conf
+*logger.xml
+
+# This stuff should be global already
+*~
+.DS_Store
+*.swp
+*._.*
+._*

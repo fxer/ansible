@@ -1,0 +1,6 @@
+---
+- include: selinux.yml
+- include: initial_users.yml
+- include: sshd.yml
+- include: basic_packages.yml
+- include: autoupdate.yml

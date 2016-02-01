@@ -1,0 +1,14 @@
+---
+ssh_users:
+  - name: fxer
+    groups: wheel
+    key: "{{ lookup('file', 'fxer.pub') }}"
+
+ssh_port: 21098
+ssh_password_authentication: 'no'
+ssh_permit_root_login: 'no'
+
+selinux_enforcement: 'enforcing'  # enforcing/permissive/disabled
+selinux_type: 'targeted'          # targeted/minimum/mls
+
+tor_monthly_bandwidth: 999 # Monthly bandwidth allocated to Tor, in GB

@@ -1,0 +1,15 @@
+---
+- name: Install yum-cron
+  yum: name=yum-cron state=present
+  tags: ['autoupdate']
+
+- name: Install yum-cron config
+  lineinfile:
+    dest=/etc/yum/yum-cron.conf
+    state=present
+    backrefs=yes
+    regexp='^apply_updates'
+    line='apply_updates = yes'
+  tags: ['autoupdate']
+  notify:
+    - restart yum-cron

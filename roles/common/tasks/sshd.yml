@@ -1,0 +1,28 @@
+---
+- name: Harden ssh configuration
+  become: yes
+  lineinfile:
+    dest: "{{ ssh_config_path }}"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+    backrefs: yes
+  with_items:
+    - regexp: "^#?PasswordAuthentication"
+      line: "PasswordAuthentication {{ ssh_password_authentication }}"
+    - regexp: "^#?PermitRootLogin"
+      line: "PermitRootLogin {{ ssh_permit_root_login }}"
+  notify:
+    - reload sshd
+  tags: ['bootstrap', 'security']
+
+- name: Configure SSH port
+  become: yes
+  lineinfile:
+    dest: "{{ ssh_config_path }}"
+    regexp: "^#?Port"
+    line: "Port {{ ssh_port }}"
+  when: ssh_port != 22
+  notify:
+    - Validate SELinux config for custom ssh port
+  tags: ['bootstrap', 'security']

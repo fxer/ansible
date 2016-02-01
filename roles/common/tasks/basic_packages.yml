@@ -1,0 +1,16 @@
+---
+- name: Upgrade all packages
+  package: name=* state=latest
+  tags: ['packages']
+
+- name: Install basic packages
+  package: name="{{ item }}" state=present
+  with_items:
+    - vim
+    - htop
+    - iotop
+    - mlocate
+    - bash-completion
+  tags: ['packages']
+  notify:
+    - update mlocate db

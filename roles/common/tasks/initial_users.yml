@@ -1,0 +1,25 @@
+---
+- name: Add ssh users
+  become: yes
+  user: name={{ item.name }}
+        groups={{ item.groups }}
+        state=present
+  with_items: ssh_users
+  tags: ['bootstrap']
+
+- name: Add ssh keys
+  become: yes
+  authorized_key: user={{ item.name }} key="{{ item.key }}"
+  with_items: ssh_users
+  tags: ['bootstrap']
+
+- name: configure sudoers
+  become: yes
+  lineinfile:
+    dest: /etc/sudoers.d/wheel
+    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+    state: present
+    create: yes
+    validate: 'visudo -cf %s'
+  with_items: ssh_users
+  tags: ['bootstrap']

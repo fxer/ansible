@@ -1,0 +1,36 @@
+- name: reload sshd
+  service: name=sshd state=reloaded
+  become: yes
+
+- name: update mlocate db
+  command: updatedb
+  become: yes
+
+- name: restart yum-cron
+  service: name=yum-cron state=restarted enabled=yes
+  become: yes
+
+- name: reboot server
+  command: shutdown -r now "Requested by Ansible"
+  async: 0
+  poll: 0
+  ignore_errors: yes
+  become: yes
+
+# Idempotent SELinux ssh port modifications
+# Adapted from: http://jensd.be/587/linux/tips-tricks-for-ansible
+- name: Validate SELinux config for custom ssh port
+  shell: semanage port -l | egrep "^ssh_port_t" | egrep "\b{{ ssh_port }}\b"
+  register: selinux_ssh_ports
+  changed_when: selinux_ssh_ports.stdout.find("{{ ssh_port }}") == -1
+  failed_when: False
+  become: yes
+  when: selinux_enforcement != "disabled"
+  notify:
+    - Configure SELinux to allow custom ssh port
+
+- name: Configure SELinux to allow custom ssh port
+  command: semanage port -a -t ssh_port_t -p tcp {{ ssh_port }}
+  become: yes
+  notify:
+    - reload sshd
