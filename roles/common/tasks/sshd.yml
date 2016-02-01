@@ -16,13 +16,17 @@
     - reload sshd
   tags: ['bootstrap', 'security']
 
+# A custom SSH port requires multiple changes, including configuring SELinux
+# and firewalld to accept the new port
 - name: Configure SSH port
   become: yes
   lineinfile:
     dest: "{{ ssh_config_path }}"
     regexp: "^#?Port"
     line: "Port {{ ssh_port }}"
-  when: ssh_port != 22
   notify:
-    - Validate SELinux config for custom ssh port
+    - selinux - validate ssh port
+    - firewalld - set ssh port
+    - firewalld - remove default ssh service
+    - reload sshd
   tags: ['bootstrap', 'security']

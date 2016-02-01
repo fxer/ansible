@@ -1,6 +1,6 @@
 ---
 - name: Install yum-cron
-  yum: name=yum-cron state=present
+  package: name=yum-cron state=present
   tags: ['autoupdate']
 
 - name: Install yum-cron config
