@@ -1,7 +1,0 @@
----
-- name: Enable firewalld
-  service: name=firewalld state=started enabled=yes
-  tags: ['bootstrap', 'security']
-
-- include: selinux.yml
-- include: sshd.yml

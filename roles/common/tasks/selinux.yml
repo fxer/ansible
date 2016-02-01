@@ -5,10 +5,9 @@
     - selinux-policy
     - selinux-policy-targeted
   become: yes
-  tags: ['bootstrap', 'security']
 
 - name: Configure SELinux
   selinux: policy={{ selinux_type }} state={{ selinux_enforcement }}
   become: yes
-  notify: reboot server
-  tags: ['bootstrap', 'security']
+  notify:
+    - reboot server

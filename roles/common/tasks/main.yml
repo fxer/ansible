@@ -1,5 +1,31 @@
 ---
-- include: security.yml
+# Update timezone if necessary
+- name: Validate timezone
+  command: readlink {{ timezone_config_path }}
+  register: current_timezone
+  changed_when: current_timezone.stdout.find("{{ timezone }}") == -1
+  notify:
+    - set timezone
+  tags: ['bootstrap']
+
+- name: Enable firewalld
+  service: name=firewalld state=started enabled=yes
+  tags: ['bootstrap', 'security']
+
+- include: selinux.yml
+  tags: ['bootstrap', 'security']
+
 - include: initial_users.yml
-- include: basic_packages.yml
+  tags: ['bootstrap']
+
+- include: sshd.yml
+  tags: ['bootstrap', 'security']
+
+- include: packages.yml
+  tags: ['packages']
+
 - include: autoupdate.yml
+  when: autoupdate_enabled
+  tags: ['packages']
+
+- include: shell_customization.yml

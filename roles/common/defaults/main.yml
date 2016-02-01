@@ -4,11 +4,54 @@ ssh_users:
     groups: wheel
     key: "{{ lookup('file', 'fxer.pub') }}"
 
-ssh_port: 21098
+timezone: 'America/Los_Angeles'
+
+# ssh customizations
+# Includes recommended security settings and custom port simpy to evade
+# automated bot traffic on port 22
 ssh_password_authentication: 'no'
 ssh_permit_root_login: 'no'
+ssh_custom_port_enabled: True     # Should we manage a non-default ssh port
+ssh_port: 21098
 
 selinux_enforcement: 'enforcing'  # enforcing/permissive/disabled
 selinux_type: 'targeted'          # targeted/minimum/mls
 
+autoupdate_enabled: True
+
+# Default packages you want installed on every server
+default_packages:
+  - vim
+  - htop
+  - iotop
+  - mlocate
+  - unzip
+  - bash-completion
+  - yum-utils         # for: needs-restarting
+  - bind-utils        # for: dig, nslookup
+
 tor_monthly_bandwidth: 999 # Monthly bandwidth allocated to Tor, in GB
+
+shell_customizations:
+  - path: /etc/profile.d/colorls.sh
+    regexp: "^alias ll="
+    line: "alias ll='ls -la --color=auto' 2>/dev/null"
+
+    # Interactive rm is the devil's work
+  - path: /root/.bashrc
+    regexp: "alias rm="
+    line: "alias rm='rm'"
+
+    # Vim settings I prefer to have global
+  - path: /etc/vimrc
+    regexp: "set smartindent"
+    line: "set smartindent"
+  - path: /etc/vimrc
+    regexp: "set tabstop=4"
+    line: "set tabstop=4"
+  - path: /etc/vimrc
+    regexp: "set shiftwidth=4"
+    line: "set shiftwidth=4"
+  - path: /etc/vimrc
+    regexp: "set expandtab"
+    line: "set expandtab"

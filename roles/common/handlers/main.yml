@@ -11,30 +11,43 @@
   notify:
     - selinux - set ssh port
 
+# If you set a custom ssh port selinux must be notified
 - name: selinux - set ssh port
   command: semanage port -a -t ssh_port_t -p tcp {{ ssh_port }}
   become: yes
 
+# If you set a custom ssh port firewalld must be notified
 - name: firewalld - set ssh port
   firewalld: port={{ ssh_port }}/tcp permanent=true state=enabled immediate=true
   become: yes
 
+# Manage firewalld ssh config via 'port' instead of default 'service'
 - name: firewalld - remove default ssh service
   firewalld: service=ssh permanent=true state=disabled immediate=true
+  become: yes
+
+# Always returns 'changed' so we ignore it
+- name: set timezone
+  command: timedatectl set-timezone {{ timezone }}
+  changed_when: False
   become: yes
 
 - name: reload sshd
   service: name=sshd state=reloaded
   become: yes
 
+# Always returns 'changed' so we ignore it
 - name: update mlocate db
   command: updatedb
+  changed_when: False
   become: yes
 
 - name: restart yum-cron
   service: name=yum-cron state=restarted enabled=yes
   become: yes
 
+# Rebooting will probably dump the Ansible ssh conneciton and report a failure
+# but rather than delay shutdown we just ignore_errors
 - name: reboot server
   command: shutdown -r now "Requested by Ansible"
   async: 0

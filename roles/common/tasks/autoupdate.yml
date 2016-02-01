@@ -1,7 +1,6 @@
 ---
 - name: Install yum-cron
   package: name=yum-cron state=present
-  tags: ['autoupdate']
 
 - name: Install yum-cron config
   lineinfile:
@@ -10,6 +9,5 @@
     backrefs=yes
     regexp='^apply_updates'
     line='apply_updates = yes'
-  tags: ['autoupdate']
   notify:
     - restart yum-cron

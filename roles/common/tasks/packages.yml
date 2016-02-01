@@ -1,0 +1,9 @@
+---
+- name: Upgrade all packages
+  package: name=* state=latest
+
+- name: Install default packages
+  package: name="{{ item }}" state=present
+  with_items: default_packages
+  notify:
+    - update mlocate db
