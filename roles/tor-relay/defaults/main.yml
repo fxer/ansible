@@ -1,0 +1,8 @@
+---
+tor_config: /etc/tor/torrc
+
+# selinux default allowed ports for tor can be found at
+# http://www.unix.com/man-page/centos/8/tor_selinux/
+tor_orport: 9001
+tor_dirport: 9030
+tor_ExitPolicy: 'reject *:*'

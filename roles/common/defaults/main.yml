@@ -30,8 +30,6 @@ default_packages:
   - yum-utils         # for: needs-restarting
   - bind-utils        # for: dig, nslookup
 
-tor_monthly_bandwidth: 999 # Monthly bandwidth allocated to Tor, in GB
-
 shell_customizations:
   - path: /etc/profile.d/colorls.sh
     regexp: "^alias ll="

@@ -32,8 +32,12 @@
   changed_when: False
   become: yes
 
+- name: restart auditd
+  service: name=auditd state=restarted enabled=yes
+  become: yes
+
 - name: reload sshd
-  service: name=sshd state=reloaded
+  service: name=sshd state=reloaded enabled=yes
   become: yes
 
 # Always returns 'changed' so we ignore it

@@ -1,10 +1,14 @@
 ---
+# Vultr VPS provider didn't have several selinux packages installed by default
 - name: Install SELinux
   package: name="{{ item }}" state=present
   with_items:
     - selinux-policy
     - selinux-policy-targeted
+    - audit
   become: yes
+  notify:
+    - restart auditd
 
 - name: Configure SELinux
   selinux: policy={{ selinux_type }} state={{ selinux_enforcement }}

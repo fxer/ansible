@@ -13,7 +13,7 @@
   tags: ['bootstrap', 'security']
 
 - include: selinux.yml
-  tags: ['bootstrap', 'security']
+  tags: ['bootstrap', 'security', 'selinux']
 
 - include: initial_users.yml
   tags: ['bootstrap']
