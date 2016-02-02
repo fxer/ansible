@@ -1,4 +1,9 @@
 ---
+# Very first thing is handle the selinux config, because it must be running
+# to manage selinux settings (if enabled). And enabling it requires an immediate reboot!
+- include: selinux.yml
+  tags: ['bootstrap', 'security', 'selinux']
+
 # Update timezone if necessary
 - name: Validate timezone
   command: readlink {{ timezone_config_path }}
@@ -11,9 +16,6 @@
 - name: Enable firewalld
   service: name=firewalld state=started enabled=yes
   tags: ['bootstrap', 'security']
-
-- include: selinux.yml
-  tags: ['bootstrap', 'security', 'selinux']
 
 - include: initial_users.yml
   tags: ['bootstrap']

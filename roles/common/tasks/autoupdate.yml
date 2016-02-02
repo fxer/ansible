@@ -1,6 +1,7 @@
 ---
 - name: Install yum-cron
   package: name=yum-cron state=present
+  become: yes
 
 - name: Install yum-cron config
   lineinfile:
@@ -9,5 +10,6 @@
     backrefs=yes
     regexp='^apply_updates'
     line='apply_updates = yes'
+  become: yes
   notify:
     - restart yum-cron

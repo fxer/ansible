@@ -50,11 +50,6 @@
   service: name=yum-cron state=restarted enabled=yes
   become: yes
 
-# Rebooting will probably dump the Ansible ssh conneciton and report a failure
-# but rather than delay shutdown we just ignore_errors
-- name: reboot server
-  command: shutdown -r now "Requested by Ansible"
-  async: 0
-  poll: 0
-  ignore_errors: yes
+- name: restart tor
+  service: name=tor state=restarted enabled=yes
   become: yes

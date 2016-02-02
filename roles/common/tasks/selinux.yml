@@ -1,6 +1,6 @@
 ---
-# Vultr VPS provider didn't have several selinux packages installed by default
-- name: Install SELinux
+# Make sure several important selinux packages are installed
+- name: SELinux - Install
   package: name="{{ item }}" state=present
   with_items:
     - selinux-policy
@@ -10,8 +10,28 @@
   notify:
     - restart auditd
 
-- name: Configure SELinux
+- name: SELinux - Configure
   selinux: policy={{ selinux_type }} state={{ selinux_enforcement }}
+  register: selinux_result
   become: yes
-  notify:
-    - reboot server
+
+# Rebooting to be handled via register, not notify, since it needs to happen immediately
+- name: SELinux - Reboot server to enable
+  shell: sleep 2 && shutdown -r now "Ansible requested reboot to enable SELinux"
+  async: 1
+  poll: 0
+  become: yes
+  ignore_errors: yes
+  when: selinux_result.changed
+
+# If we defined a custom SSH port it shouldn't have been changed yet. Hopefully.
+- name: SELinux - Waiting for server to reboot
+  local_action: wait_for
+    host={{ ansible_host | default(inventory_hostname) }}
+    port=22
+    state=started
+    connect_timeout=5
+    delay=10
+    timeout=300
+  become: no
+  when: selinux_result.changed
