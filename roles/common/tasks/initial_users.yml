@@ -2,6 +2,7 @@
 - name: Add ssh users
   become: yes
   user: name={{ item.name }}
+        password={{ item.password }}
         groups={{ item.groups }}
         state=present
   with_items: ssh_users

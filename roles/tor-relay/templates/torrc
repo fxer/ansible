@@ -12,6 +12,9 @@ Nickname {{tor_nickname}}
 {% if tor_ContactInfo is defined %}
 ContactInfo {{ tor_ContactInfo }}
 {% endif %}
+{% if tor_MyFamily is defined %}
+MyFamily {{ tor_MyFamily }}
+{% endif %}
 
 ORPort {{ tor_orport }}
 DirPort {{ tor_dirport }}

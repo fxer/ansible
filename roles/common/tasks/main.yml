@@ -4,21 +4,17 @@
 - include: selinux.yml
   tags: ['bootstrap', 'security', 'selinux']
 
-# Update timezone if necessary
-- name: Validate timezone
-  command: readlink {{ timezone_config_path }}
-  register: current_timezone
-  changed_when: current_timezone.stdout.find("{{ timezone }}") == -1
-  notify:
-    - set timezone
-  tags: ['bootstrap']
+# Add swap early so later plays have sufficent memory to execute
+- include: add_swap.yml
+  when: swapfile_size > 0
+  tags: ['bootstrap', 'swap']
 
 - name: Enable firewalld
   service: name=firewalld state=started enabled=yes
   tags: ['bootstrap', 'security']
 
 - include: initial_users.yml
-  tags: ['bootstrap']
+  tags: ['bootstrap', 'createusers']
 
 - include: sshd.yml
   tags: ['bootstrap', 'security']
@@ -31,3 +27,12 @@
   tags: ['packages']
 
 - include: shell_customization.yml
+
+# Update timezone if necessary
+- name: Validate timezone
+  command: readlink {{ timezone_config_path }}
+  register: current_timezone
+  changed_when: current_timezone.stdout.find("{{ timezone }}") == -1
+  notify:
+    - set timezone
+  tags: ['bootstrap']

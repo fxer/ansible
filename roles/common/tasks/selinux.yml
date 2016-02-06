@@ -35,3 +35,8 @@
     timeout=300
   become: no
   when: selinux_result.changed
+
+# If SELinux was enabled/disabled then ansible's previously gathered facts about this system
+# are out of date and could cause later plays to fail. Force facts to be updated
+- name: SELinux - Force ansible to regather facts
+  setup: filter='ansible_selinux'

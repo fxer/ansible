@@ -2,7 +2,8 @@
 ssh_users:
   - name: fxer
     groups: wheel
-    key: "{{ lookup('file', 'fxer.pub') }}"
+    key: "{{ lookup('file', 'jmo.pub') }}"
+    password: "{{ fxer_password }}"
 
 timezone: 'America/Los_Angeles'
 
@@ -19,6 +20,10 @@ selinux_type: 'targeted'          # targeted/minimum/mls
 
 autoupdate_enabled: True
 
+# A small VPS can use some swap to avoid processes being killed too easily
+swapfile_size: 1024 # Swapfile size in MB, 0 to disable
+swapfile_location: /swapfile
+
 # Default packages you want installed on every server
 default_packages:
   - vim
@@ -27,7 +32,7 @@ default_packages:
   - mlocate
   - unzip
   - bash-completion
-  - yum-utils         # for: needs-restarting
+  - yum-utils         # for: needs-restarting, repoquery
   - bind-utils        # for: dig, nslookup
 
 shell_customizations:

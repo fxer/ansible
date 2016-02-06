@@ -28,3 +28,4 @@
   become: yes
   notify:
     - restart tor
+  tags: ['torrc']

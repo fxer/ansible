@@ -1,2 +1,3 @@
 ---
-- include: tor-relay.yml
+- include: webservers.yml
+- include: tor-relays.yml
