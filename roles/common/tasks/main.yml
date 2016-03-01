@@ -13,8 +13,8 @@
   service: name=firewalld state=started enabled=yes
   tags: ['bootstrap', 'security']
 
-- include: initial_users.yml
-  tags: ['bootstrap', 'createusers']
+- include: create_users.yml
+  tags: ['bootstrap', 'create_users']
 
 - include: sshd.yml
   tags: ['bootstrap', 'security']
@@ -27,6 +27,7 @@
   tags: ['packages']
 
 - include: shell_customization.yml
+  tags: ['shell_customization']
 
 # Update timezone if necessary
 - name: Validate timezone

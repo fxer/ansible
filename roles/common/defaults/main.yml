@@ -6,6 +6,8 @@ ssh_users:
     password: "{{ fxer_password }}"
 
 timezone: 'America/Los_Angeles'
+ssh_config_path: /etc/ssh/sshd_config
+timezone_config_path: /etc/localtime
 
 # ssh customizations
 # Includes recommended security settings and custom port simpy to evade

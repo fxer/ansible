@@ -33,7 +33,8 @@ Roles & Tasks
   * Configure firewalld
   * Create torrc config
   
-## Examples Plays
+Example Plays
+---
 Run the 'webservers' playbook against a specific host
 * `ansible-playbook webservers.yml --limit HOST`
 

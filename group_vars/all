@@ -1,2 +1,0 @@
-ssh_config_path: /etc/ssh/sshd_config
-timezone_config_path: /etc/localtime

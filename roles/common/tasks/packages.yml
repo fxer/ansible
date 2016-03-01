@@ -1,6 +1,5 @@
 ---
-# Install EPEL and upgrade all existing packages, or user cusomized packages may fail
-# to install in the next step
+# Install EPEL and upgrade all existing packages, or installing user specified packages may fail
 - name: packages - Upgrade existing to latest
   package: name=* state=latest
   become: yes
@@ -11,7 +10,7 @@
 
 - name: packages - Install user defaults
   package: name="{{ item }}" state=present
-  with_items: default_packages
+  with_items: "{{ default_packages }}"
   become: yes
   notify:
     - update mlocate db
