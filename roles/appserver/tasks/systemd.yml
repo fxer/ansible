@@ -1,0 +1,21 @@
+---
+- name: Create systemd units
+  template:
+    src: systemd.service.j2
+    dest: "{{ systemd_dir }}/{{ item }}.service"
+    owner: root
+    group: root
+    mode: 0644
+  with_items: "{{ systemd_apps_enabled }}"
+  register: systemd_output
+  become: yes
+
+- name: Enable systemd apps
+  command: systemctl enable {{ systemd_apps_enabled | join(" ") }}
+  when: systemd_output.changed
+  become: yes
+
+- name: Restart systemd apps
+  command: systemctl restart {{ systemd_apps_enabled | join(" ") }}
+  when: systemd_output.changed
+  become: yes

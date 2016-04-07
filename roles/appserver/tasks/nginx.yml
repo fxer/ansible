@@ -1,0 +1,77 @@
+---
+- name: Install nginx repo
+  template:
+    src: nginx.repo.j2
+    dest: /etc/yum.repos.d/nginx.repo
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+
+- name: Install nginx
+  yum: name=nginx state=latest update_cache=yes
+  become: yes
+  notify:
+    - restart nginx
+
+- name: Install custom Diffie-Hellman param files
+  copy:
+    src: "{{ item.value }}"
+    dest: "{{ certs_dir }}/{{ item.value }}"
+    owner: root
+    group: root
+    mode: 0600
+  become: yes
+  with_dict: "{{ nginx_dhparam_files }}"
+  notify:
+    - reload nginx
+  tags: ['nginx-dhparam']
+
+- name: Install supplemental configs (FastCGI)
+  copy:
+    src: "{{ item.filename }}"
+    dest: "{{ item.dest_path }}"
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+  with_items:
+    - { filename: fastcgi.conf, dest_path: "{{ nginx_dir }}/fastcgi.conf" }
+
+- name: Install vim syntax
+  get_url:
+    url: "{{ nginx_vim_syntax_url }}/{{ item }}"
+    dest: "{{ vim_syntax_dir }}/{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+  with_items:
+    - 'syntax/nginx.vim'
+    - 'ftdetect/nginx.vim'
+    - 'indent/nginx.vim'
+
+- name: Install nginx.conf
+  template:
+    src: nginx.conf.j2
+    dest: "{{ nginx_dir }}/nginx.conf"
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  become: yes
+  notify:
+    - reload nginx
+
+- name: Create site configs
+  template:
+    src: site.conf.j2
+    dest: "{{ nginx_dir }}/conf.d/{{ item }}.conf"
+    owner: root
+    group: root
+    mode: 0644
+  with_items: "{{ nginx_sites_enabled }}"
+  become: yes
+  notify:
+    - reload nginx
+  tags: ['nginx-sites']
