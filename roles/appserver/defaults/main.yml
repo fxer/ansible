@@ -7,10 +7,7 @@ nginx_multi_accept: 'on'
 nginx_connection_processor: 'epoll'
 nginx_keepalive_timeout: '30s'
 nginx_server_tokens: 'off' # Security issue, don't need to hand out server version numbers
-nginx_client_max_body_size: '100m' # maximum filesize allowed for file uploads
-nginx_https_only: True
-nginx_http_listen_string: '80'
-nginx_https_port: '443'
+nginx_client_max_body_size: '10m' # maximum filesize allowed for file uploads
 
 # Optimize how packets are sent
 nginx_sendfile: 'on'

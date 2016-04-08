@@ -1,11 +1,10 @@
-# Provision and Secure a CentOS 7 server with ansible
+# Provision a CentOS 7 server with Ansible
 This is my preferred way of provisioning and locking down a new CentOS 7 VPS
-
 
 Requirements
 ---
-* host: Ansible >= 2.0
-* servers: CentOS 7 (includes SELinux support)
+* **host** Ansible >= 2.0
+* **servers** CentOS 7 (includes SELinux support)
 
 Roles & Tasks
 ---
