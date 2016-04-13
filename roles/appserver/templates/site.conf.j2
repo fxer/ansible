@@ -1,8 +1,0 @@
-# Ansible managed config file (don't hand edit, silly, or it will get overwritten)
-
-{% for k,v in nginx_sites[item].items()|sort if k[:6] == 'server' %}
-server {
-	{{ v|indent(4) }}
-}
-
-{% endfor %}

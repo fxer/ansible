@@ -4,4 +4,6 @@ hosts
 *.retry
 group_vars
 !group_vars/all.yml
-dhparam*
+
+required-roles/
+secret/

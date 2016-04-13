@@ -1,5 +1,9 @@
 ---
 - hosts: appservers
   roles:
-    - common
-    - appserver
+    - role: common
+
+    - role: nginx
+      tags: ['nginx']
+
+    - role: appserver

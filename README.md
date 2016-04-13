@@ -1,13 +1,14 @@
 # Provision a CentOS 7 server with Ansible
 This is my preferred way of provisioning and locking down a new CentOS 7 VPS
 
-Requirements
----
-* **host** Ansible >= 2.0
-* **servers** CentOS 7 (includes SELinux support)
+## Requirements
+`ansible-galaxy install -r requirements.yaml`
 
-Roles & Tasks
----
+## Roles & Tasks
+
+### Dependencies
+* [fxer.ansible-nginx](https://github.com/fxer/ansible-nginx)
+
 ### common
 * Enable SELinux (immediate reboot to activate)
 * Add swap (otherwise a small VPS may be visited by the OOM Killer in later tasks)
@@ -39,8 +40,8 @@ Roles & Tasks
 * Configure firewalld
 * Create torrc config
   
-Example Plays
----
+## Example Plays
+
 Run the 'appservers' playbook against a specific host
 
 ```
@@ -52,3 +53,6 @@ Run the 'tor-conf' task to rebuild the torrc files for every tor relay
 ```
 ansible-playbook tor-relays.yml --ask-become-pass --tags tor-conf
 ```
+
+## License
+2-clause BSD

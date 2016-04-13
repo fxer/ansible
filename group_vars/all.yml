@@ -1,5 +1,2 @@
 systemd_dir: '/etc/systemd/system'
 tmp_dir: '/tmp'
-certs_dir: '/etc/pki/tls/certs'
-nginx_dir: '/etc/nginx'
-vim_syntax_dir: '/usr/share/vim/vimfiles'
