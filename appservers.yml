@@ -1,9 +1,11 @@
 ---
 - hosts: appservers
   roles:
-    - role: common
+    - role: fxer.common
+      tags: ['common']
 
-    - role: nginx
+    - role: fxer.nginx
       tags: ['nginx']
 
-    - role: appserver
+    - role: fxer.appserver
+      tags: ['appserver']

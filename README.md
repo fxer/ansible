@@ -2,44 +2,21 @@
 This is my preferred way of provisioning and locking down a new CentOS 7 VPS
 
 ## Requirements
-`ansible-galaxy install -r requirements.yaml`
+`ansible-galaxy install -r requirements.yml`
 
 ## Roles & Tasks
 
 ### Dependencies
+* [fxer.ansible-common](https://github.com/fxer/ansible-common)
 * [fxer.ansible-nginx](https://github.com/fxer/ansible-nginx)
-
-### common
-* Enable SELinux (immediate reboot to activate)
-* Add swap (otherwise a small VPS may be visited by the OOM Killer in later tasks)
-* Enable firewalld
-* Create initial users (ssh keys, passwords & sudo access)
-* Harden sshd configuration
-  * Disable root login
-  * Disable password authentication
-  * Move to non-default port (also handles SELinux & firewalld config for this)
-* Update all existing packages
-* Install user-defined base packages (ex: vim, unzip)
-* Enable auto-updates (via yum-cron)
-* Install global shell enhancements (custom aliases, vim configs)
-* Set timezone
- 
-### appserver
-* Install official nginx repo (stable or mainline branch)
-	* Install latest nginx
-	* Install vim syntax highlighting
-	* Install custom Diffie-Hellman parameters
-	* Install supplemental configs (ex: php-fpm)
-	* Configure an optimized nginx.conf
-	* Configure server blocks for dictionary of individual sites
-* Create systemd .service files for dictionary of individual apps
+* [fxer.ansible-appserver](https://github.com/fxer/ansible-appserver)
 
 ### tor-relay
 * Install Tor
 * Configure SELinux
 * Configure firewalld
 * Create torrc config
-  
+
 ## Example Plays
 
 Run the 'appservers' playbook against a specific host

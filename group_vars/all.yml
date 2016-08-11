@@ -1,2 +1,6 @@
-systemd_dir: '/etc/systemd/system'
-tmp_dir: '/tmp'
+
+common_users:
+  - name: jmontgomery
+    groups: wheel
+    sshkeys:
+      - 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDJUreFAGYAkX28EA6OtnXm/u5puxcxP2CQZavTDHj5dl+RfEdjU7pQgWxBVrM1C3K2jDXKr4MgZ5bQJOVnNpeSyw9MUBy9JsrlV8eAs/3Loi087VPqefwN7+Lq4g4AvoJKH+Vh+leGOtG5bNJ2ecYjKe38zDLC3vG6YaCT6iVm8E0l1olciBMFiw0ve6qz4TBJH7iKTIfZMefBaaxfo8p13yGVPKToxjvhw1N9L0hyY/dhMcyxMra/bAQVPflfXgzZIhxL9OTV6o6qhnVmn5wrSQ7qsISlc5M0s1fP99zbsoVpZBs83ElCQMZrGYrNqMkTp4vQkAuVxyd0qN/MVxquO4hw8qdUyd4fcdJ5EZ6XLc85hv6MRM3YU12jIEFD1Gqp33ix7Vq9lHNoCZFWJYUYRzo0ISTQ7i0HI1agm4UcCEQp3HQUbREhPTU+UxnCgmjI9eZzkicK835i0aFA2UhA5dPuuiFRTsryeG9NuthTwMU1vnX0u+q6scOxMkiuPEjWZwuTOQdX8Yu5NVzXThQSD+H4Sz2Yk4D/IQNnsagXqbQD/ApLbHIQaq0f9aSKYhafvBdpo+bxkPOC+h1bRYdLI/gCFna5yCWziOpFvO2Y9SMug2FQm59DkGJBh+AjMWkp7la+PK95P6VQr0496b1LDXL8kAbQEDKTj7sgKnvZDw== jmontgomery'

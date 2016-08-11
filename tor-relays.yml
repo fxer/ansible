@@ -1,5 +1,8 @@
 ---
 - hosts: tor-relays
   roles:
-    - common
-    - tor-relay
+    - role: fxer.common
+      tags: ['common']
+
+    - role: fxer.tor
+      tags: ['tor']

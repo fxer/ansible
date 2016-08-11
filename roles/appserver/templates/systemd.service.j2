@@ -1,8 +1,0 @@
-# Ansible managed config file (don't hand edit, silly, or it will get overwritten)
-
-{% for k,v in systemd_apps[item].iteritems() %}
-[{{ k|capitalize }}]
-{{ v }}
-{% endfor %}
-[Install]
-WantedBy=multi-user.target

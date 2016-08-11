@@ -1,2 +1,11 @@
-- name: nginx
+- name: fxer.common
+  src: https://github.com/fxer/ansible-common
+
+- name: fxer.appserver
+  src: https://github.com/fxer/ansible-appserver
+
+- name: fxer.nginx
   src: https://github.com/fxer/ansible-nginx
+
+- name: fxer.tor
+  src: https://github.com/fxer/ansible-tor
